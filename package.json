@@ -8,7 +8,10 @@
     "lint": "vue-cli-service lint"
   },
   "dependencies": {
+    "@3846masa/axios-cookiejar-support": "^0.4.2",
+    "axios": "^0.19.0",
     "core-js": "^2.6.5",
+    "tough-cookie": "^3.0.1",
     "vue": "^2.6.10"
   },
   "devDependencies": {
