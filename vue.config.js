@@ -1,5 +1,5 @@
 module.exports = {
   devServer: {
-    proxy: 'https://pryum.rink.decrypt.multibaas.com/'
+    proxy: 'https://octo4.rink.decrypt.multibaas.com/',
   },
 };
