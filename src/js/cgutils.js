@@ -1,4 +1,6 @@
 /* eslint-disable no-param-reassign */
+import { ethers } from 'ethers';
+
 export default {
   install: (Vue) => {
     Vue.prototype.$_cgutils = {
@@ -13,6 +15,22 @@ export default {
         delete tx.from;
         delete tx.hash;
         return tx;
+      },
+      connectToWeb3(browserHook) {
+        const result = {
+          provider: null,
+          web3Available: false,
+        };
+
+        if (typeof browserHook !== 'undefined') {
+          // Use Mist/MetaMask's provider
+          result.provider = new ethers.providers.Web3Provider(browserHook.currentProvider);
+          result.web3Available = true;
+        } else {
+          console.error('Please set up your MetaMask network.');
+          console.error('Read the instructions in MultiBaas > Account > Connecting to Geth');
+        }
+        return result;
       },
     };
   },

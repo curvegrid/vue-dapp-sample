@@ -6,7 +6,7 @@ module.exports = {
     proxy: {
       '/': {
         ws: false,
-        target: 'https://octo4.rink.decrypt.multibaas.com/',
+        target: 'https://octo4.dev.decrypt.multibaas.com/',
         changeOrigin: true,
         cookieDomainRewrite: 'localhost',
         onProxyReq: (proxyReq) => {
@@ -14,7 +14,7 @@ module.exports = {
           // requests. To prevent CORS issues, we have to change
           // the Origin to match the target URL.
           if (proxyReq.getHeader('origin')) {
-            proxyReq.setHeader('origin', 'https://octo4.rink.decrypt.multibaas.com/');
+            proxyReq.setHeader('origin', 'https://octo4.dev.decrypt.multibaas.com/');
           }
         },
       },
