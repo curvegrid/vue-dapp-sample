@@ -1,7 +1,7 @@
 <template>
   <div id="app">
-    <button @click="doThing">Click me</button>
     <div>{{ response }} </div>
+    <button @click="getOwner">Get Zombie Factory Owner</button>
   </div>
 </template>
 
@@ -14,7 +14,10 @@ axiosCookieJarSupport(axios);
 
 const cookieJar = new tough.CookieJar();
 
-const baseURL = 'http://localhost:8080/';
+axios.defaults.jar = cookieJar;
+axios.defaults.withCredentials = true;
+
+const baseURL = 'https://localhost:8080/';
 const apiUser = '';
 const apiPassword = '';
 
@@ -27,23 +30,24 @@ export default {
       response: '',
     };
   },
+  created() {
+    this.login();
+  },
   methods: {
-    async doThing() {
+    async login() {
       try {
-        this.response = await axios.post(`${baseURL}api/v0/login`,
+        await axios.post(`${baseURL}api/v0/login`,
           {
             email: apiUser,
             password: apiPassword,
-          },
-          {
-            jar: cookieJar, // tough.CookieJar or boolean
-            withCredentials: true, // If true, send cookie stored in jar
           });
-        this.response = await axios.get(`${baseURL}api/v0/chains/ethereum/contracts/zombiefactory/addresses/zombiefactory/owner`,
-          {
-            jar: cookieJar,
-            withCredentials: true,
-          });
+      } catch (err) {
+        console.log(err);
+      }
+    },
+    async getOwner() {
+      try {
+        this.response = await axios.get(`${baseURL}api/v0/chains/ethereum/contracts/zombiefactory/addresses/zombiefactory/owner`);
       } catch (err) {
         console.log(err);
       }
