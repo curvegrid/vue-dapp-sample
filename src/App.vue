@@ -1,7 +1,7 @@
 <template>
   <div id="app">
-    <button @click="doThing">Click me</button>
     <div>{{ response }} </div>
+    <button @click="getOwner">Get Zombie Factory Owner</button>
   </div>
 </template>
 
@@ -45,7 +45,7 @@ export default {
         console.log(err);
       }
     },
-    async doThing() {
+    async getOwner() {
       try {
         this.response = await axios.get(`${baseURL}api/v0/chains/ethereum/contracts/zombiefactory/addresses/zombiefactory/owner`);
       } catch (err) {
