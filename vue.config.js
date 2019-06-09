@@ -1,3 +1,5 @@
+const instanceURL = 'https://octo4.dev.decrypt.multibaas.com/';
+
 module.exports = {
   devServer: {
     https: true,
@@ -6,7 +8,7 @@ module.exports = {
     proxy: {
       '/': {
         ws: false,
-        target: 'https://octo4.dev.decrypt.multibaas.com/',
+        target: instanceURL,
         changeOrigin: true,
         cookieDomainRewrite: 'localhost',
         onProxyReq: (proxyReq) => {
@@ -14,7 +16,7 @@ module.exports = {
           // requests. To prevent CORS issues, we have to change
           // the Origin to match the target URL.
           if (proxyReq.getHeader('origin')) {
-            proxyReq.setHeader('origin', 'https://octo4.dev.decrypt.multibaas.com/');
+            proxyReq.setHeader('origin', instanceURL);
           }
         },
       },

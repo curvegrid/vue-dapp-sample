@@ -1,11 +1,12 @@
 <template>
   <div id="app">
-    <div>{{ response }} </div>
     <button @click="getTotalSupply">Get Total MltiToken Supply</button>
     <form v-on:submit.prevent>
       <input type="text" placeholder="Number of Tokens to Mint" v-model="tokenAmount" />
       <button prevent="submit" @click="mintTokens">Mint Tokens</button>
     </form>
+    <hr />
+    <pre v-if="response">{{ response | prettyJSON }}</pre>
   </div>
 </template>
 
@@ -18,14 +19,17 @@ axiosCookieJarSupport(axios);
 
 const cookieJar = new tough.CookieJar();
 
+// Automatically store the cookie returned by the MultiBaas server
 axios.defaults.jar = cookieJar;
+// Automatically include the stored cookie in requests being made to the MultiBaas server
 axios.defaults.withCredentials = true;
 
 const baseURL = 'https://localhost:8080/';
 const apiUser = '';
 const apiPassword = '';
-const ETH_SIGNER = ''; // this is the address in MetaMask you will use to sign the transaction
-const CONTRACT_LABEL_OR_ADDRESS = 'mltitoken'; // this is the deployed contract's address, or the label you gave it
+
+// The eployed contract's address, or the label you assigned it in MultiBaas
+const CONTRACT_LABEL_OR_ADDRESS = 'mltitoken';
 export default {
   name: 'app',
   components: {
@@ -35,6 +39,11 @@ export default {
       response: '',
       tokenAmount: '',
     };
+  },
+  filters: {
+    prettyJSON(value) {
+      return JSON.stringify(value, null, 2);
+    },
   },
   async created() {
     // If MetaMask's privacy mode is enabled, we must get the user's permission
@@ -53,6 +62,11 @@ export default {
       this.$root.$_web3 = web3Config.provider;
       this.$root.$_web3Available = web3Config.web3Available;
     },
+    // Get the Eth Address currently selected in MetaMask
+    async getActiveAccount() {
+      const accounts = await this.$root.$_web3.listAccounts();
+      return accounts[0];
+    },
     async login() {
       try {
         await axios.post(`${baseURL}api/v0/login`,
@@ -66,13 +80,15 @@ export default {
     },
     async getTotalSupply() {
       try {
-        this.response = await axios.get(`${baseURL}api/v0/chains/ethereum/contracts/mltitoken/addresses/${CONTRACT_LABEL_OR_ADDRESS}/totalSupply`);
+        const { data } = await axios.get(`${baseURL}api/v0/chains/ethereum/contracts/mltitoken/addresses/${CONTRACT_LABEL_OR_ADDRESS}/totalSupply`);
+        this.response = data;
       } catch (err) {
         console.log(err);
       }
     },
     async mintTokens() {
       try {
+        const ETH_SIGNER = await this.getActiveAccount();
         const jsonBody = {
           args: {
             _amount: this.tokenAmount,
@@ -112,7 +128,6 @@ export default {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  text-align: center;
   color: #2c3e50;
   margin-top: 60px;
 }
