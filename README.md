@@ -1,7 +1,7 @@
 # vue-dapp-sample
 
 ## Project configuration
-In `vue.config.js`, update the value of `instanceURL` to point your MultiBaas instance. Note that the URL must begin with `https://` and end with `/`
+In `vue.config.js`, update the value of `instanceURL` to point to your MultiBaas instance. Note that the URL must begin with `https://` and end with `/`.
 
 In `App.vue`, set the values of `apiUser` and `apiPassword` to your MultiBaas username and password respectively.
 
