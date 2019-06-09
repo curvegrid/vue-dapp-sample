@@ -17,10 +17,8 @@ import tough from 'tough-cookie';
 
 axiosCookieJarSupport(axios);
 
-const cookieJar = new tough.CookieJar();
-
 // Automatically store the cookie returned by the MultiBaas server
-axios.defaults.jar = cookieJar;
+axios.defaults.jar = new tough.CookieJar();
 // Automatically include the stored cookie in requests being made to the MultiBaas server
 axios.defaults.withCredentials = true;
 
@@ -28,7 +26,7 @@ const baseURL = 'https://localhost:8080/';
 const apiUser = '';
 const apiPassword = '';
 
-// The eployed contract's address, or the label you assigned it in MultiBaas
+// The deployed contract's address, or the label you assigned it in MultiBaas
 const CONTRACT_LABEL_OR_ADDRESS = 'mltitoken';
 export default {
   name: 'app',
