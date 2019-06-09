@@ -32,6 +32,17 @@ export default {
         }
         return result;
       },
+      // Get the selected address from Metamask or web3 provider
+      // Returns null if not found
+      async getActiveAccount() {
+        try {
+          const response = await this.web3.eth.getAccounts();
+          return response[0];
+        } catch (e) {
+          console.error('Unable to get wallet address:', e);
+        }
+        return null;
+      },
     };
   },
 };

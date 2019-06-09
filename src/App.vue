@@ -16,15 +16,12 @@ import tough from 'tough-cookie';
 
 axiosCookieJarSupport(axios);
 
-const cookieJar = new tough.CookieJar();
-
-axios.defaults.jar = cookieJar;
+axios.defaults.jar = new tough.CookieJar();
 axios.defaults.withCredentials = true;
 
 const baseURL = 'https://localhost:8080/';
 const apiUser = '';
 const apiPassword = '';
-const ETH_SIGNER = ''; // this is the address in MetaMask you will use to sign the transaction
 const CONTRACT_LABEL_OR_ADDRESS = 'mltitoken'; // this is the deployed contract's address, or the label you gave it
 export default {
   name: 'app',
@@ -72,13 +69,18 @@ export default {
       }
     },
     async mintTokens() {
+      const sender = await this.$root.$_cgutils.getActiveAccount();
+      if (sender === null) {
+        console.warn('No sender. Unable to collect stamp');
+        return;
+      }
       try {
         const jsonBody = {
           args: {
             _amount: this.tokenAmount,
           },
-          from: ETH_SIGNER,
-          signer: ETH_SIGNER,
+          from: sender,
+          signer: sender,
         };
 
         const {
