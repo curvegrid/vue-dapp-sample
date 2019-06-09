@@ -24,7 +24,10 @@ axios.defaults.jar = cookieJar;
 // Automatically include the stored cookie in requests being made to the MultiBaas server
 axios.defaults.withCredentials = true;
 
+// The local address where the demo app will be served
 const baseURL = 'https://localhost:8080/';
+
+// Configure these values with your MultiBaas login information
 const apiUser = '';
 const apiPassword = '';
 
