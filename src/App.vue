@@ -10,7 +10,7 @@
       </p>
     </form>
     <hr />
-    <pre v-if="response">{{ response | prettyJSON }}</pre>
+    <pre>{{ response | prettyJSON }}</pre>
   </div>
 </template>
 
