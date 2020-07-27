@@ -2,8 +2,12 @@
   <div id="app">
     <button @click="getTotalSupply">Get Total MltiToken Supply</button>
     <form v-on:submit.prevent>
-      <input type="text" placeholder="Number of Tokens to Mint" v-model="tokenAmount" />
-      <button prevent="submit" @click="mintTokens">Mint Tokens</button>
+      <p>
+        <input type="text" placeholder="Number of Tokens to Mint" v-model="tokenAmount" />
+      </p>
+      <p>
+        <button prevent="submit" @click="mintTokens">Mint Tokens</button>
+      </p>
     </form>
     <hr />
     <pre v-if="response">{{ response | prettyJSON }}</pre>
@@ -11,20 +15,11 @@
 </template>
 
 <script>
-import axios from 'axios';
-import tough from 'tough-cookie';
-
-// Automatically store the cookie returned by the MultiBaas server
-axios.defaults.jar = new tough.CookieJar();
-// Automatically include the stored cookie in requests being made to the MultiBaas server
-axios.defaults.withCredentials = true;
-
 // [NEED TO FILL] The local address where the demo app will be served
-const baseURL = '';
+const BASE_URL = '';
 
 // [NEED TO FILL] API key
-const apiKey = '';
-axios.defaults.headers = { Authorization: `Bearer ${apiKey}` };
+const API_KEY = '';
 
 // The deployed contract's address, or the label you assigned it in MultiBaas
 const CONTRACT_LABEL_OR_ADDRESS = 'mltitoken';
@@ -36,6 +31,7 @@ export default {
     return {
       response: '',
       tokenAmount: '',
+      axios: null,
     };
   },
   filters: {
@@ -51,6 +47,7 @@ export default {
     }
 
     this.connectToWeb3();
+    this.axios = this.$root.$_cgutils.createAxiosInstance(API_KEY);
   },
   methods: {
     // We must init the web3 provider so that we can sign transactions
@@ -66,7 +63,16 @@ export default {
     },
     async getTotalSupply() {
       try {
-        const { data } = await axios.get(`${baseURL}api/v0/chains/ethereum/contracts/mltitoken/addresses/${CONTRACT_LABEL_OR_ADDRESS}/totalSupply`);
+        const account = await this.getActiveAccount();
+        const jsonBody = {
+          args: [],
+          from: account,
+        };
+
+        const { data } = await this.axios.post(
+          `${BASE_URL}/api/v0/chains/ethereum/addresses/${CONTRACT_LABEL_OR_ADDRESS}/contracts/mltitoken/methods/totalSupply`,
+          jsonBody,
+        );
         this.response = data;
       } catch (err) {
         console.log(err);
@@ -74,21 +80,19 @@ export default {
     },
     async mintTokens() {
       try {
-        const ETH_SIGNER = await this.getActiveAccount();
+        const account = await this.getActiveAccount();
         const jsonBody = {
-          args: {
-            _amount: this.tokenAmount,
-          },
-          from: ETH_SIGNER,
-          signer: ETH_SIGNER,
+          args: [this.tokenAmount],
+          from: account,
+          signer: account,
         };
 
         const {
           data: {
             result: { tx, submitted },
           },
-        } = await axios.post(
-          `${baseURL}api/v0/chains/ethereum/contracts/mltitoken/addresses/${CONTRACT_LABEL_OR_ADDRESS}/mint`,
+        } = await this.axios.post(
+          `${BASE_URL}/api/v0/chains/ethereum/addresses/${CONTRACT_LABEL_OR_ADDRESS}/contracts/mltitoken/methods/mint`,
           jsonBody,
         );
 
