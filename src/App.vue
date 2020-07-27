@@ -12,22 +12,19 @@
 
 <script>
 import axios from 'axios';
-import axiosCookieJarSupport from '@3846masa/axios-cookiejar-support';
 import tough from 'tough-cookie';
-
-axiosCookieJarSupport(axios);
 
 // Automatically store the cookie returned by the MultiBaas server
 axios.defaults.jar = new tough.CookieJar();
 // Automatically include the stored cookie in requests being made to the MultiBaas server
 axios.defaults.withCredentials = true;
 
-// The local address where the demo app will be served
-const baseURL = 'https://localhost:8080/';
+// [NEED TO FILL] The local address where the demo app will be served
+const baseURL = '';
 
-// Configure these values with your MultiBaas login information
-const apiUser = '';
-const apiPassword = '';
+// [NEED TO FILL] API key
+const apiKey = '';
+axios.defaults.headers = { Authorization: `Bearer ${apiKey}` };
 
 // The deployed contract's address, or the label you assigned it in MultiBaas
 const CONTRACT_LABEL_OR_ADDRESS = 'mltitoken';
@@ -54,7 +51,6 @@ export default {
     }
 
     this.connectToWeb3();
-    this.login();
   },
   methods: {
     // We must init the web3 provider so that we can sign transactions
@@ -67,17 +63,6 @@ export default {
     async getActiveAccount() {
       const accounts = await this.$root.$_web3.listAccounts();
       return accounts[0];
-    },
-    async login() {
-      try {
-        await axios.post(`${baseURL}api/v0/login`,
-          {
-            email: apiUser,
-            password: apiPassword,
-          });
-      } catch (err) {
-        console.log(err);
-      }
     },
     async getTotalSupply() {
       try {
