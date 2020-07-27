@@ -10,7 +10,7 @@
   "dependencies": {
     "axios": "^0.19.0",
     "core-js": "^2.6.5",
-    "ethers": "^4.0.29",
+    "ethers": "^4.0.47",
     "vue": "^2.6.10"
   },
   "devDependencies": {
