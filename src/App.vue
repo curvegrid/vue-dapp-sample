@@ -58,7 +58,11 @@ export default {
   methods: {
     // We must init the web3 provider so that we can sign transactions
     connectToWeb3() {
-      const web3Config = this.$root.$_cgutils.connectToWeb3(window.web3, JSON_RPC, SIGNER_PRIVATE_KEY);
+      const web3Config = this.$root.$_cgutils.connectToWeb3(
+        window.web3,
+        JSON_RPC,
+        SIGNER_PRIVATE_KEY,
+      );
       this.$root.$_web3 = web3Config.provider;
       this.$root.$_web3Available = web3Config.web3Available;
     },
