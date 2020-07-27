@@ -16,10 +16,10 @@
 
 <script>
 // [NEED TO FILL] The local address where the demo app will be served
-const BASE_URL = 'https://rjlrpdjikze7fn2vscxfuk365y.multibaas.com';
+const BASE_URL = '';
 
 // [NEED TO FILL] API key
-const API_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE1OTU4NTIzOTUsInN1YiI6IjEifQ.b6vrRuDLEQ-tfrRYq2v_NG43LiJXo1KMXzgYcZoCN7s';
+const API_KEY = '';
 
 // The deployed contract's address, or the label you assigned it in MultiBaas
 const CONTRACT_LABEL_OR_ADDRESS = 'mltitoken';
