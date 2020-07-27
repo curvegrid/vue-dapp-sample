@@ -1,5 +1,6 @@
 /* eslint-disable no-param-reassign */
 import { ethers } from 'ethers';
+import axios from 'axios';
 
 export default {
   install: (Vue) => {
@@ -31,6 +32,16 @@ export default {
           console.error('Read the instructions in MultiBaas > Account > Connecting to Geth');
         }
         return result;
+      },
+      createAxiosInstance(apiKey) {
+        return axios.create({
+          headers: {
+            Authorization: `Bearer ${apiKey}`,
+            'Content-Type': 'application/json',
+          },
+          withCredentials: true,
+          timeout: 1000,
+        });
       },
     };
   },
