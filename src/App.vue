@@ -26,7 +26,9 @@ const JSON_RPC = '';
 const SIGNER_PRIVATE_KEY = '';
 
 // The deployed contract's address, or the label you assigned it in MultiBaas
+// [CAN BE REPLACED]
 const CONTRACT_LABEL_OR_ADDRESS = 'mltitoken';
+
 export default {
   name: 'app',
   components: {
