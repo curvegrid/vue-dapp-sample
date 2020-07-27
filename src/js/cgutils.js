@@ -1,5 +1,5 @@
 /* eslint-disable no-param-reassign */
-import { ethers } from 'ethers';
+import { ethers, utils } from 'ethers';
 import axios from 'axios';
 
 export default {
@@ -12,6 +12,8 @@ export default {
       formatEthersTx(txFromAPI) {
         const tx = JSON.parse(JSON.stringify(txFromAPI));
         tx.gasLimit = tx.gas;
+        tx.gasPrice = utils.bigNumberify(tx.gasPrice);
+        tx.value = utils.bigNumberify(tx.value);
         delete tx.gas;
         delete tx.from;
         delete tx.hash;
@@ -33,8 +35,9 @@ export default {
         }
         return result;
       },
-      createAxiosInstance(apiKey) {
+      createAxiosInstance(baseURL, apiKey) {
         return axios.create({
+          baseURL,
           headers: {
             Authorization: `Bearer ${apiKey}`,
             'Content-Type': 'application/json',
