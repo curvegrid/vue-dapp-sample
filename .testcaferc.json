@@ -1,0 +1,11 @@
+{
+  "browsers": ["chrome:headless", "firefox:headless", "chrome:userProfile", "firefox:userProfile", "safari", "opera"],
+  "src": ["tests/*.spec.js", "!tests/models.js"],
+  "selectorTimeout": 10000,
+  "assertionTimeout": 3000,
+  "appInitDelay": 3000,
+  "screenshots": {
+    "path": "tests/screenshots",
+    "takeOnFails": true
+  }
+}
