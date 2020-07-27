@@ -1,6 +1,7 @@
 /* eslint-disable no-param-reassign */
 import { ethers, utils } from 'ethers';
 import axios from 'axios';
+import { Mock3 } from 'mock3';
 
 export default {
   install: (Vue) => {
@@ -19,13 +20,18 @@ export default {
         delete tx.hash;
         return tx;
       },
-      connectToWeb3(browserHook) {
+      connectToWeb3(browserHook, jsonRpc = '', signerPrivateKey = '') {
         const result = {
           provider: null,
           web3Available: false,
         };
 
-        if (typeof browserHook !== 'undefined') {
+        if (process.env.NODE_ENV === 'test' && jsonRpc && signerPrivateKey) {
+          // Set mock3 with base settings for test env
+          result.provider = new Mock3(jsonRpc);
+          result.provider.setSigner(signerPrivateKey);
+          result.web3Available = true;
+        } else if (typeof browserHook !== 'undefined') {
           // Use Mist/MetaMask's provider
           result.provider = new ethers.providers.Web3Provider(browserHook.currentProvider);
           result.web3Available = true;
