@@ -16,10 +16,10 @@
 
 <script>
 // [NEED TO FILL] The local address where the demo app will be served
-const BASE_URL = '';
+const BASE_URL = 'https://rjlrpdjikze7fn2vscxfuk365y.multibaas.com';
 
 // [NEED TO FILL] API key
-const API_KEY = '';
+const API_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE1OTU4NTIzOTUsInN1YiI6IjEifQ.b6vrRuDLEQ-tfrRYq2v_NG43LiJXo1KMXzgYcZoCN7s';
 
 // The deployed contract's address, or the label you assigned it in MultiBaas
 const CONTRACT_LABEL_OR_ADDRESS = 'mltitoken';
@@ -30,7 +30,7 @@ export default {
   data() {
     return {
       response: '',
-      tokenAmount: '',
+      tokenAmount: '10',
       axios: null,
     };
   },
@@ -47,7 +47,7 @@ export default {
     }
 
     this.connectToWeb3();
-    this.axios = this.$root.$_cgutils.createAxiosInstance(API_KEY);
+    this.axios = this.$root.$_cgutils.createAxiosInstance(BASE_URL, API_KEY);
   },
   methods: {
     // We must init the web3 provider so that we can sign transactions
@@ -70,7 +70,7 @@ export default {
         };
 
         const { data } = await this.axios.post(
-          `${BASE_URL}/api/v0/chains/ethereum/addresses/${CONTRACT_LABEL_OR_ADDRESS}/contracts/mltitoken/methods/totalSupply`,
+          `/api/v0/chains/ethereum/addresses/${CONTRACT_LABEL_OR_ADDRESS}/contracts/mltitoken/methods/totalSupply`,
           jsonBody,
         );
         this.response = data;
@@ -82,7 +82,7 @@ export default {
       try {
         const account = await this.getActiveAccount();
         const jsonBody = {
-          args: [this.tokenAmount],
+          args: [`${this.tokenAmount}`],
           from: account,
           signer: account,
         };
@@ -92,7 +92,7 @@ export default {
             result: { tx, submitted },
           },
         } = await this.axios.post(
-          `${BASE_URL}/api/v0/chains/ethereum/addresses/${CONTRACT_LABEL_OR_ADDRESS}/contracts/mltitoken/methods/mint`,
+          `/api/v0/chains/ethereum/addresses/${CONTRACT_LABEL_OR_ADDRESS}/contracts/mltitoken/methods/mint`,
           jsonBody,
         );
 
