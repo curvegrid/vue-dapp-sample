@@ -73,15 +73,8 @@ export default {
     },
     async getTotalSupply() {
       try {
-        const account = await this.getActiveAccount();
-        const jsonBody = {
-          args: [],
-          from: account,
-        };
-
         const { data } = await this.axios.post(
           `/api/v0/chains/ethereum/addresses/${CONTRACT_LABEL_OR_ADDRESS}/contracts/mltitoken/methods/totalSupply`,
-          jsonBody,
         );
         this.response = data;
       } catch (err) {
