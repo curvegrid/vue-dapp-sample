@@ -28,7 +28,10 @@ test('should get total supply', async (t) => {
     .notEql(-1);
 });
 
-test('should mint tokens', async (t) => {
+// This test is disabled. It can be made to work by importing Mock3 and
+// supplying it with a private key but there is currently no safe way to
+// configure that. Caveat machinator.
+test.skip('should mint tokens', async (t) => {
   await t.click(tokenView.buttonGetTotalSupply);
   const amountBefore = extractAmount(await tokenView.response.innerText);
 

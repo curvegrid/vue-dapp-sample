@@ -21,10 +21,6 @@ const BASE_URL = '';
 // [REQUIRED] Server API key
 const API_KEY = '';
 
-// JSON RPC needed for UI test
-const JSON_RPC = '';
-const SIGNER_PRIVATE_KEY = ''; //NEVER USE A REAL ACCOUNT HERE! This is meant only for throw-away test accounts on test networks.
-
 // The deployed contract's address, or the label you assigned it in MultiBaas
 // [CAN BE REPLACED]
 const CONTRACT_LABEL_OR_ADDRESS = 'mltitoken';
@@ -58,11 +54,7 @@ export default {
   methods: {
     // We must init the web3 provider so that we can sign transactions
     connectToWeb3() {
-      const web3Config = this.$root.$_cgutils.connectToWeb3(
-        window.web3,
-        JSON_RPC,
-        SIGNER_PRIVATE_KEY,
-      );
+      const web3Config = this.$root.$_cgutils.connectToWeb3(window.web3);
       this.$root.$_web3 = web3Config.provider;
       this.$root.$_web3Available = web3Config.web3Available;
     },
