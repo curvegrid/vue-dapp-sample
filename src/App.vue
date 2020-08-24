@@ -15,13 +15,13 @@
 </template>
 
 <script>
-// [NEED TO FILL] Server URL
+// [REQUIRED] Server URL
 const BASE_URL = '';
 
-// [NEED TO FILL] Server API key
+// [REQUIRED] Server API key
 const API_KEY = '';
 
-// [NEED TO FILL] JSON RPC for UI test
+// JSON RPC needed for UI test
 const JSON_RPC = '';
 const SIGNER_PRIVATE_KEY = '';
 
