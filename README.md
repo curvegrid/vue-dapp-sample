@@ -1,17 +1,20 @@
 # Vue DApp Sample
 
-## Project configuration
+## MultiBaas configuration
 
-After [deploying MultiBaas instance](https://www.curvegrid.com/docs/3-0-getting-started-creating-a-multibaas-deployment/), please make sure fill out all config below in `App.vue`:
+1. **Deployment**
+    - You will need to [create a MultiBaas deployment](https://www.curvegrid.com/docs/3-0-getting-started-creating-a-multibaas-deployment/) or have an existing deployment to use this sample.
+2. **API Key**
+    - You will also need to [provision an API key](https://www.curvegrid.com/docs/5-1-generate-api-keys/) with membership in the `DApp User` group.
+3. **Mlti Token Contract**
+    - You will need to [deploy a `Mlti Token` contract](https://www.curvegrid.com/docs/4-3-deploy-a-smart-contract/) using the label `mltitoken`.
+4. **CORS Configuration**
+    - Finally, you will need to update your CORS settings by going to `Admin` then `CORS Domains` and setting up the domain of the sample app. If you are running locally this will be `http://localhost:8080` by default.
+
+After you have configured your deployment and smart contract, please fill out the required parameters below in `App.vue`:
 
 - `BASE_URL`
 - `API_KEY`
-- `JSON_RPC`
-- `SIGNER_PRIVATE_KEY`
-
-For this sample, you also need to deploy `Mlti Token` with a label as `mltitoken`. If you want to use a different label then you need to replace a config below as well in `App.vue`:
-
-- `CONTRACT_LABEL_OR_ADDRESS`
 
 ## Project setup
 
@@ -19,30 +22,42 @@ For this sample, you also need to deploy `Mlti Token` with a label as `mltitoken
 yarn install
 ```
 
-### Compiles and hot-reloads for development
+### Compile and hot-reload for development
 
 ```sh
 yarn run serve
 ```
 
-### Compiles and minifies for production
+### Compile and minify for production
 
 ```sh
 yarn run build
 ```
 
-### Lints and fixes files
+### Lint and fix files
 
 ```sh
 yarn run lint
 ```
 
-### Run your UI tests
+## UI tests
+
+In order to run the tests you will need a JSON RPC URL and a private key.
+
+1. **JSON RPC URL**
+    - You can use the URL of your web3 provider or, if you are using a special network such as Curvegrid's private network, you can get a URL from your MultiBaas deployment by going to `Admin` then `API Keys` and then generating a new key with `Use this key as a public Web3 key` selected.
+2. **Private Key**
+    - You will also need the private key of the owner of the MltiToken contract. You should be able to export this from your web3 browser or wallet.
+
+When you are ready, please configure the following parameters in `App.vue`:
+
+- `JSON_RPC`
+- `SIGNER_PRIVATE_KEY`
+
+You **must stop any currently running server**, i.e. Ctrl-C out of `yarn run serve`.
+
+You can then run the tests with the following command:
 
 ```sh
 yarn run test
 ```
-
-### Customize configuration
-
-See [Configuration Reference](https://cli.vuejs.org/config/).
