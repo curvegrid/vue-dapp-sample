@@ -23,7 +23,7 @@ const API_KEY = '';
 
 // JSON RPC needed for UI test
 const JSON_RPC = '';
-const SIGNER_PRIVATE_KEY = '';
+const SIGNER_PRIVATE_KEY = ''; //NEVER USE A REAL ACCOUNT HERE! This is meant only for throw-away test accounts on test networks.
 
 // The deployed contract's address, or the label you assigned it in MultiBaas
 // [CAN BE REPLACED]
