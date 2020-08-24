@@ -42,12 +42,14 @@ yarn run lint
 
 ## UI tests
 
+**CAUTION**: These tests will run against the above configured server and deployed MltiToken contract and cause new tokens to be minted. **Do not run these tests on a production smart contract.**
+
 In order to run the tests you will need a JSON RPC URL and a private key.
 
 1. **JSON RPC URL**
     - You can use the URL of your web3 provider or, if you are using a special network such as Curvegrid's private network, you can get a URL from your MultiBaas deployment by going to `Admin` then `API Keys` and then generating a new key with `Use this key as a public Web3 key` selected.
 2. **Private Key**
-    - You will also need the private key of the owner of the MltiToken contract. You should be able to export this from your web3 browser or wallet.
+    - You will also need the private key of the owner of the MltiToken contract. You should be able to export this from your web3 browser or wallet. **CAUTION: YOU WILL BE STORING AN EXPOSED PRIVATE KEY IN THE SOURCE CODE! NEVER DO THIS WITH A REAL ACCOUNT!**
 
 When you are ready, please configure the following parameters in `App.vue`:
 
