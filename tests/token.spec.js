@@ -20,12 +20,12 @@ test('should get total supply', async (t) => {
   await t
     .click(tokenView.buttonGetTotalSupply)
     .expect(tokenView.response.innerText)
-    .match(new RegExp('"output": "[0-9]+"'));
+    .match(new RegExp('"output": "[0-9\.]+"'));
 
   const amount = extractAmount(await tokenView.response.innerText);
   await t
     .expect(amount)
-    .gt(0);
+    .notEql(-1);
 });
 
 test('should mint tokens', async (t) => {
