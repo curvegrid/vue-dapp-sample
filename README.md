@@ -1,36 +1,53 @@
-# vue-dapp-sample
+# Vue DApp Sample
 
-## Project configuration
-In `vue.config.js`, update the value of `instanceURL` to point to your MultiBaas instance. Note that the URL must begin with `https://` and end with `/`.
+## MultiBaas configuration
 
-In `App.vue`, set the values of `apiUser` and `apiPassword` to your MultiBaas username and password respectively.
+1. **Deployment**
+    - You will need to [create a MultiBaas deployment](https://www.curvegrid.com/docs/3-0-getting-started-creating-a-multibaas-deployment/) or have an existing deployment to use this sample.
+2. **API Key**
+    - You will also need to [provision an API key](https://www.curvegrid.com/docs/5-1-generate-api-keys/) with membership in the `DApp User` group.
+3. **Mlti Token Contract**
+    - You will need to [deploy a `Mlti Token` contract](https://www.curvegrid.com/docs/4-3-deploy-a-smart-contract/) using the label `mltitoken`.
+4. **CORS Configuration**
+    - Finally, you will need to update your CORS settings by going to `Admin` then `CORS Domains` and setting up the domain of the sample app. If you are running locally this will be `http://localhost:8080` by default.
+
+After you have configured your deployment and smart contract, please fill out the required parameters below in `App.vue`:
+
+- `BASE_URL`
+- `API_KEY`
 
 ## Project setup
-```
+
+```sh
 yarn install
 ```
 
-### Compiles and hot-reloads for development
-```
+### Compile and hot-reload for development
+
+```sh
 yarn run serve
 ```
 
-After serving the app, please make sure that the URL the application is served is equal to the value of `baseURL` in `App.vue`
+### Compile and minify for production
 
-### Compiles and minifies for production
-```
+```sh
 yarn run build
 ```
 
-### Run your tests
-```
-yarn run test
-```
+### Lint and fix files
 
-### Lints and fixes files
-```
+```sh
 yarn run lint
 ```
 
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+## UI tests
+
+These tests will run against the above configured server and deployed MltiToken contract.
+
+You **must stop any currently running server**, i.e. Ctrl-C out of `yarn run serve`.
+
+You can then run the tests with the following command:
+
+```sh
+yarn run test
+```

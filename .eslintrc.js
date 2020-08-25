@@ -14,4 +14,8 @@ module.exports = {
   parserOptions: {
     parser: 'babel-eslint',
   },
+  globals: {
+    'fixture': false,
+    'test': false,
+  },
 };

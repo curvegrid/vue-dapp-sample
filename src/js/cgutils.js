@@ -1,5 +1,6 @@
 /* eslint-disable no-param-reassign */
-import { ethers } from 'ethers';
+import { ethers, utils } from 'ethers';
+import axios from 'axios';
 
 export default {
   install: (Vue) => {
@@ -11,12 +12,14 @@ export default {
       formatEthersTx(txFromAPI) {
         const tx = JSON.parse(JSON.stringify(txFromAPI));
         tx.gasLimit = tx.gas;
+        tx.gasPrice = utils.bigNumberify(tx.gasPrice);
+        tx.value = utils.bigNumberify(tx.value);
         delete tx.gas;
         delete tx.from;
         delete tx.hash;
         return tx;
       },
-      connectToWeb3(browserHook) {
+      connectToWeb3(browserHook, jsonRpc = '', signerPrivateKey = '') {
         const result = {
           provider: null,
           web3Available: false,
@@ -31,6 +34,17 @@ export default {
           console.error('Read the instructions in MultiBaas > Account > Connecting to Geth');
         }
         return result;
+      },
+      createAxiosInstance(baseURL, apiKey) {
+        return axios.create({
+          baseURL,
+          headers: {
+            Authorization: `Bearer ${apiKey}`,
+            'Content-Type': 'application/json',
+          },
+          withCredentials: true,
+          timeout: 1000,
+        });
       },
     };
   },
