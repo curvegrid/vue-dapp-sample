@@ -1,3 +1,7 @@
+**⚠️ This repository has been deprecated in favor of [curvegrid/multibaas-sample-app](https://github.com/curvegrid/multibaas-sample-app).**
+
+---
+
 # Vue DApp Sample
 
 ## MultiBaas configuration
